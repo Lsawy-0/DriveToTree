@@ -12,22 +12,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # استخدم Node 22 لأن firebase-tools والباكدجات عندك بتتطلب >=20
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install deps
         run: npm ci
 
-      - name: Prepare Google credentials
+      # اكتب ملف credentials.json بطريقة صحيحة (بدون ما يبقى فاضي)
+      - name: Write Google credentials file
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS }}
         run: |
-          echo "${{ secrets.GOOGLE_CREDENTIALS }}" > credentials.json
+          echo "$GOOGLE_CREDENTIALS_JSON" > "$RUNNER_TEMP/credentials.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/credentials.json" >> $GITHUB_ENV
 
       - name: Build Google Drive tree_data.json
         env:
           ROOT_FOLDER_ID: ${{ secrets.ROOT_FOLDER_ID }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/credentials.json
         run: |
           mkdir -p public
           node build-tree.js
