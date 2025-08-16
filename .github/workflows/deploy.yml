@@ -2,11 +2,9 @@ name: Build & Deploy to Firebase
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   schedule:
-    - cron: '*/15 * * * *'
-  workflow_dispatch:
+    - cron: "*/15 * * * *"   # تشغيل كل 15 دقيقة (بالوقت UTC)
 
 
 jobs:
