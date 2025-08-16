@@ -1,11 +1,18 @@
 name: Build & Deploy to Firebase
 
 on:
+  # تشغيل عند وصول إشارة من Apps Script
+  repository_dispatch:
+    types: [ gdrive_change ]
+
+  # (اختياري) لو عايز تفضل تبني عند أي push على main كمان، سيب البلوك التالي.
+  # لو مش عايزه، احذفه لتكون كل التشغيلات من Apps Script فقط.
   push:
     branches: [ "main" ]
-  schedule:
-    - cron: "*/15 * * * *"   # تشغيل كل 15 دقيقة (بالوقت UTC)
 
+concurrency:
+  group: drive-sync
+  cancel-in-progress: true
 
 jobs:
   build-deploy:
@@ -15,7 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Node 22 متوافق مع firebase-tools والحزم الحديثة
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -24,7 +30,6 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      # كتابة ملف Google credentials من GitHub Secret بطريقة آمنة وسليمة
       - name: Write Google credentials file
         run: |
           cat > "$RUNNER_TEMP/credentials.json" << 'JSON'
