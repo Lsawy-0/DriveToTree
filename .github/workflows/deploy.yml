@@ -1,0 +1,37 @@
+name: Build & Deploy to Firebase
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Prepare Google credentials
+        run: |
+          echo "${{ secrets.GOOGLE_CREDENTIALS }}" > credentials.json
+
+      - name: Build Google Drive tree_data.json
+        env:
+          ROOT_FOLDER_ID: ${{ secrets.ROOT_FOLDER_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/credentials.json
+        run: |
+          mkdir -p public
+          node build-tree.js
+          test -s public/tree_data.json && echo "tree_data.json generated."
+
+      - name: Deploy to Firebase Hosting
+        run: npx firebase-tools deploy --only hosting --project githubdrivetotree --non-interactive --token "${{ secrets.FIREBASE_TOKEN }}"
