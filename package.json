@@ -1,0 +1,13 @@
+{
+  "name": "drive-viewer-firebase",
+  "version": "1.0.0",
+  "description": "Workflow to deploy Google Drive structure to Firebase",
+  "main": "build-tree.js",
+  "dependencies": {
+    "firebase": "^12.1.0",
+    "googleapis": "^155.0.1"
+  },
+  "devDependencies": {
+    "firebase-tools": "^14.12.0"
+  }
+}
