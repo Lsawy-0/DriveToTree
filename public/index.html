@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شجرة عرض المشاريع</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1 id="pageTitle">شجرة عرض المشاريع</h1>
+            <p id="subtitle" class="breadcrumbs">واجهة تفاعلية يتم تحديثها تلقائياً من Google Drive</p>
+            <div id="breadcrumbs" style="display: none;"></div>
+            <a href="#" id="backLink" class="back-link" style="display: none;">&larr; العودة إلى الشجرة الرئيسية</a>
+        </header>
+
+        <div class="toolbar">
+            <div class="search-container">
+                <input type="text" id="searchBox" class="search-box" placeholder="ابحث عن ملف أو مجلد...">
+            </div>
+            <div class="actions">
+                <button id="jumpBtn" class="go-btn" title="الانتقال السريع إلى عنصر محدد">قفزة سريعة</button>
+                <button id="expandAllBtn" class="mini-btn" title="عرض كل المجلدات">عرض الكل</button>
+                <button id="collapseAllBtn" class="mini-btn" title="إخفاء كل المجلدات">إخفاء الكل</button>
+            </div>
+        </div>
+
+        <div id="treeContainer" class="tree-container">
+            <p>جارٍ تحميل بيانات الشجرة...</p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
