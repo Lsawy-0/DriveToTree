@@ -3,6 +3,8 @@ name: Build & Deploy to Firebase
 on:
   push:
     branches: [ "main" ]
+  schedule:
+    - cron: "*/15 * * * *"   # تشغيل كل 15 دقيقة (بالوقت UTC)
 
 jobs:
   build-deploy:
@@ -12,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # استخدم Node 22 لأن firebase-tools والباكدجات عندك بتتطلب >=20
+      # Node 22 متوافق مع firebase-tools والحزم الحديثة
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -21,12 +23,12 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      # اكتب ملف credentials.json بطريقة صحيحة (بدون ما يبقى فاضي)
+      # كتابة ملف Google credentials من GitHub Secret بطريقة آمنة وسليمة
       - name: Write Google credentials file
-        env:
-          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS }}
         run: |
-          echo "$GOOGLE_CREDENTIALS_JSON" > "$RUNNER_TEMP/credentials.json"
+          cat > "$RUNNER_TEMP/credentials.json" << 'JSON'
+          ${{ secrets.GOOGLE_CREDENTIALS }}
+          JSON
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/credentials.json" >> $GITHUB_ENV
 
       - name: Build Google Drive tree_data.json
