@@ -266,19 +266,7 @@ function initializeTree(treeData) {
     if (searchInput) {
         searchInput.addEventListener('input', () => renderByHash());
     }
-    if (jumpBtn) {
-        jumpBtn.addEventListener('click', () => {
-            const name = prompt('اكتب اسم العنصر المراد الانتقال إليه (مطابقة تامة لاسم العقدة):');
-            if (name && name.trim()) {
-                const path = findPathByName(treeData, name.trim());
-                if (path) {
-                    setViewFolder(path);
-                } else {
-                    alert('لم يتم العثور على العنصر المطلوب.');
-                }
-            }
-        });
-    }
+    
     if (expandAllBtn) expandAllBtn.addEventListener('click', expandAll);
     if (collapseAllBtn) collapseAllBtn.addEventListener('click', collapseAll);
     if (backLink) backLink.addEventListener('click', (e) => { e.preventDefault(); setViewRoot(); });
@@ -292,3 +280,4 @@ function initializeTree(treeData) {
         renderByHash();
     }
 }
+
