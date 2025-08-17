@@ -256,7 +256,7 @@ function initializeTree(treeData) {
         } else {
             if (backLink) backLink.style.display = 'none';
             if (crumbsEl) crumbsEl.style.display = 'none';
-            if (pageTitle) pageTitle.textContent = 'شجرة عرض المشاريع';
+            if (pageTitle) pageTitle.textContent = 'سواعدنا للمقاولات العامة';
             if (subtitle) subtitle.textContent = 'واجهة تفاعلية يتم تحديثها تلقائياً من Google Drive';
             renderTree(null, filterVal, null, null, false);
         }
@@ -280,4 +280,5 @@ function initializeTree(treeData) {
         renderByHash();
     }
 }
+
 
